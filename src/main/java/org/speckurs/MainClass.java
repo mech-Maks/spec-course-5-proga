@@ -46,29 +46,33 @@ public class MainClass {
 
         String state = "0";
         int pivot = 1;
-        while (!"halt".equals(state)) {
+        try {
+            while (!"halt".equals(state)) {
+                Presenter.present(algorithm, pivot, state);
+
+                Map<String, List<String>> commandsForState = programCommands.get(state);
+                List<String> commands = commandsForState.get(String.valueOf(algorithm.charAt(pivot)));
+
+                if (!"*".equals(commands.get(0))) {
+                    algorithm.setCharAt(pivot, commands.get(0).charAt(0));
+                }
+
+                switch (commands.get(1)) {
+                    case "r":
+                        pivot++;
+                        break;
+                    case "l":
+                        pivot--;
+                        break;
+                    default:
+                        break;
+                }
+
+                state = commands.get(2);
+            }
             Presenter.present(algorithm, pivot, state);
-
-            Map<String, List<String>> commandsForState = programCommands.get(state);
-            List<String> commands = commandsForState.get(String.valueOf(algorithm.charAt(pivot)));
-
-            if (!"*".equals(commands.get(0))) {
-                algorithm.setCharAt(pivot, commands.get(0).charAt(0));
-            }
-
-            switch (commands.get(1)) {
-                case "r":
-                    pivot++;
-                    break;
-                case "l":
-                    pivot--;
-                    break;
-                default:
-                    break;
-            }
-
-            state = commands.get(2);
+        } catch (Exception e) {
+            log.info("Error occurred while executing algorithm, please check it and try again.\n");
         }
-        Presenter.present(algorithm, pivot, state);
     }
 }
