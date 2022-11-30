@@ -1,0 +1,24 @@
+;Prog from previous task
+algo:1111|11111
+
+
+0                       1 * r go_right_l_side
+go_right_l_side         1 * r go_right_l_side
+go_right_l_side         | * r go_right_r_side
+
+go_right_r_side         1 * r go_right_r_side
+go_right_r_side         _ * l go_left_r_side_delete
+
+go_left_r_side_delete   1 _ l go_left_r_side
+
+go_left_r_side          1 * l go_left_r_side
+go_left_r_side          | * l go_left_l_side 
+
+go_left_l_side          1 * l go_left_l_side
+go_left_l_side          _ * r go_right_l_side_delete
+
+go_right_l_side_delete  1 _ r 0
+
+
+go_left_r_side_delete   | 0 * halt
+0                       | 1 * halt
