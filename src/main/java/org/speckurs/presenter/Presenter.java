@@ -16,6 +16,13 @@ public class Presenter {
         System.out.println();
     }
 
+    public static void printInstructions() {
+        System.out.println("*******************************");
+        System.out.println("* <any key> = step in machine *");
+        System.out.println("* initial state: 0            *");
+        System.out.println("*******************************");
+    }
+
     private static String tabs(int n) {
         StringBuilder tabs = new StringBuilder();
         tabs.append("  ");

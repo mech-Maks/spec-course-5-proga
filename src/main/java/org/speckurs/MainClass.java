@@ -3,14 +3,16 @@ package org.speckurs;
 import org.speckurs.parser.FileParser;
 import org.speckurs.presenter.Presenter;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class MainClass {
-    private static Logger log = Logger.getLogger(MainClass.class.getName());
+    private static final Logger log = Logger.getLogger(MainClass.class.getName());
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -46,9 +48,13 @@ public class MainClass {
 
         String state = "0";
         int pivot = 1;
-        try {
+
+        Presenter.printInstructions();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
+
             while (!"halt".equals(state)) {
                 Presenter.present(algorithm, pivot, state);
+                bufferedReader.readLine();
 
                 Map<String, List<String>> commandsForState = programCommands.get(state);
                 List<String> commands = commandsForState.get(String.valueOf(algorithm.charAt(pivot)));
